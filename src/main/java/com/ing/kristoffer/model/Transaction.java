@@ -9,6 +9,10 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
+
 @Entity
 public class Transaction {
 	@Id
@@ -17,12 +21,22 @@ public class Transaction {
 	@Column(name = "CUSTOMER_ID")
 	private String customerID;
 	@Column(name = "TRANSACTION_DATE")
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonFormat(pattern = "dd/MM/yyyy hh:mm a")
 	private LocalDateTime transactionDate;
 	@Column(name = "TRANSACTION_AMOUNT")
 	private BigDecimal transactionAmount;
 	@Enumerated(EnumType.STRING)
 	@Column(name = "TRANSACTION_TYPE")
 	private TransactionType transactionType;
+
+	public String getTransactionID() {
+		return transactionID;
+	}
+
+	public void setTransactionID(String transactionID) {
+		this.transactionID = transactionID;
+	}
 
 	public String getCustomerID() {
 		return customerID;
@@ -55,4 +69,5 @@ public class Transaction {
 	public void setTransactionType(TransactionType transactionType) {
 		this.transactionType = transactionType;
 	}
+
 }

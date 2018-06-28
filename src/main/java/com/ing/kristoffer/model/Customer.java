@@ -5,8 +5,14 @@ import java.time.YearMonth;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.ser.YearMonthSerializer;
+
 public class Customer {
 	private String customerID;
+	@JsonSerialize(using = YearMonthSerializer.class)
+	@JsonFormat(pattern="yyyy-MM")
 	private YearMonth month;
 	private Classification classification;
 	private List<Transaction> transactions = new ArrayList<Transaction>();
